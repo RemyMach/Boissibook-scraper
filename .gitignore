@@ -2,3 +2,4 @@ venv
 static
 test.py
 .env
+.DS_Store
