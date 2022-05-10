@@ -1,0 +1,2 @@
+class SeleniumNoReachable(Exception):
+    pass
