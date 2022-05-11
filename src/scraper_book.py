@@ -2,7 +2,6 @@ from selenium import webdriver  # For dynamic web scraping
 from selenium.webdriver.chrome.options import Options   # To add headless option (scrape without a chrome window)
 import os, time, re
 from urllib.request import urlretrieve # To save the scraped images
-from picture import Picture
 from os import listdir
 from os.path import isfile, join
 from error.to_much_download_error import ToMuchDownloadError
@@ -26,6 +25,7 @@ class ScraperBook:
         # Go to the home page
         try:
             url = f"https://fr.fr1lib.org/s/{isbn}?"
+
             driver.get(url)
             driver.implicitly_wait(1)
         except:
@@ -62,23 +62,21 @@ class ScraperBook:
             driver.quit()
             raise ToMuchDownloadError(url_download)
         except NoSuchElementException:
-            print('on a pas dépassé la limite de download')
+            pass
 
         driver.quit()
 
         # search if the folder is in the download directory
         download_directroy = os.environ['DOWNLOAD_PATH']
-        while(True):
-            count_max_seconds -= 2
-            if count_max_seconds == 0:
-                driver.quit()
-                raise ToMuchDownloadError(url_download)
+        count_max_seconds = SECONDS_LIMIT_DOWNLOAD
+        while(count_max_seconds != 0):
 
             files = [f for f in listdir(download_directroy) if isfile(join(download_directroy, f))]
-            print('-------------------------')
-            count_max_seconds = SECONDS_LIMIT_DOWNLOAD
             for file in files:
                 if(re.match(r" *"  + name_book.replace('\'', '') + r" *" , file)):
                     return file
-                    
+
+            count_max_seconds -= 2
             time.sleep(2)
+        
+        raise ToMuchDownloadError(url_download)
