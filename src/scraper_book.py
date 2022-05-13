@@ -73,7 +73,7 @@ class ScraperBook:
 
             files = [f for f in listdir(download_directroy) if isfile(join(download_directroy, f))]
             for file in files:
-                if(re.match(r" *"  + name_book.replace('\'', '') + r" *" , file)):
+                if(re.match(r" *"  + name_book.replace('\'', '').replace(':', '') + r" *" , file)):
                     return file
 
             count_max_seconds -= 2
