@@ -64,7 +64,6 @@ class ScraperBook:
         except NoSuchElementException:
             pass
 
-        driver.quit()
 
         # search if the folder is in the download directory
         download_directroy = os.environ['DOWNLOAD_PATH']
@@ -74,9 +73,12 @@ class ScraperBook:
             files = [f for f in listdir(download_directroy) if isfile(join(download_directroy, f))]
             for file in files:
                 if(re.match(r" *"  + name_book.replace('\'', '').replace(':', '') + r" *" , file)):
+                    time.sleep(9)
+                    driver.quit()
                     return file
 
             count_max_seconds -= 2
             time.sleep(2)
         
+        driver.quit()
         raise ToMuchDownloadError(url_download)
