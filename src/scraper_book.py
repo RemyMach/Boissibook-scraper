@@ -26,7 +26,7 @@ class ScraperBook:
         SECONDS_LIMIT_DOWNLOAD = 36
         # Create selenium web driver
         options = Options()
-        #options.add_argument("--headless") # Run the webdriver without opening a browser window
+        options.add_argument("--headless") # Run the webdriver without opening a browser window
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
         driver = webdriver.Chrome(options=options)
@@ -65,7 +65,7 @@ class ScraperBook:
             raise FileNotFoundError
 
         try:
-            #driver.get(url_download)
+            driver.get(url_download)
             content_page_to_much_download = driver.find_element_by_xpath(f"//h1[@class='download-limits-error__header']").get_attribute("innerHTML").strip()
             if content_page_to_much_download == "Vous avez atteint votre limite quotidienne":
                 log.info('I find the div to much download')
