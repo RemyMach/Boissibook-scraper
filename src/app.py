@@ -7,21 +7,35 @@ from error.selenium_no_reachable import SeleniumNoReachable
 import os
 from response.error_response import ErrorResponse
 from response.to_much_download_response import ToMuchDownloadResponse
+from upload_file import uploadFile
+
 
 load_dotenv('../.env')
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
 cors = CORS(app, resources={r"": {"origins": "*"}})
 
-@app.route('/book/<isbn>', methods=['GET'])
+@app.route('/book', methods=['POST'])
 @cross_origin(origin='*',headers=['Content-Type','Authorization'])
-def getFile(isbn):
+def getFile():
+
+    isbn = request.get_json()['isbn']
+    bookId = request.get_json()['bookId']
+
+    print(isbn)
 
     try: 
-        file = ScraperBook.bookScrape(isbn)
+        file = ScraperBook.bookScrape(isbn, bookId)
         try:
             download_directory = os.environ['DOWNLOAD_PATH']
-            return send_from_directory(download_directory, file, as_attachment=True)
+            uploadFile(file, bookId)
+            response = make_response(
+                {'status': "DOWNLOAD_SUCCESS"},
+                200,
+            )
+            response.headers["Content-Type"] = "application/json"
+            return response
+            #return send_from_directory(download_directory, file, as_attachment=True)
         except FileNotFoundError:
             response = make_response(
                 ErrorResponse('internal_server_error',  'Internal Server Error').__dict__,

@@ -21,7 +21,7 @@ log.addHandler(handler)
 class ScraperBook:
     
     @staticmethod
-    def bookScrape(isbn):
+    def bookScrape(isbn, bookId):
         
         SECONDS_LIMIT_DOWNLOAD = 36
         # Create selenium web driver
@@ -89,7 +89,7 @@ class ScraperBook:
             for file in files:
                 if(file.endswith(".crdownload") == False):
                     if(re.match(r" *"  + name_book.replace('\'', '').replace(':', '') + r" *" , file)):
-                        log.info(f"the file math is {file}")
+                        log.info(f"the file match is {file}")
                         time.sleep(9)
                         driver.quit()
                         return file
