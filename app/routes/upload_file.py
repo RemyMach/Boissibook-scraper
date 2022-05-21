@@ -13,7 +13,7 @@ def uploadFile(path, bookId):
 
     for key in extension_to_app_type.keys():
         if(path.endswith(key)):
-            payload={'bookId': bookId}
+            payload={'bookId': bookId, 'userId': None}
             files=[('file',(path, open(f"{download_path}/{path}" ,'rb'), extension_to_app_type[key]))]
             headers = {}
             response = requests.request("POST", url, headers=headers, data=payload, files=files)
