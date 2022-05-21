@@ -9,8 +9,8 @@ from routes.errors import errors
 load_dotenv('../.env')
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
-api = Api(app, errors=errors)
 cors = CORS(app, resources={r"": {"origins": "*"}})
+api = Api(app, errors=errors)
 
 
 initialize_routes(api)

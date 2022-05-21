@@ -3,8 +3,6 @@ import os
 from dotenv import load_dotenv
 from .extension_to_app_type import extension_to_app_type
 
-load_dotenv()
-
 def uploadFile(path, bookId):
     download_path = os.getenv('DOWNLOAD_PATH')
     base_path = os.getenv('BOISSIBOOK_API')
