@@ -23,7 +23,7 @@ class ScraperBook:
     @staticmethod
     def bookScrape(isbn, bookId):
         
-        SECONDS_LIMIT_DOWNLOAD = 36
+        SECONDS_LIMIT_DOWNLOAD = 60
         # Create selenium web driver
         options = Options()
         options.add_argument("--headless") # Run the webdriver without opening a browser window
