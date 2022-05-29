@@ -34,6 +34,9 @@ def uploadFile(path, bookId):
                 log.info(response.status_code)
                 log.info(response.text)
                 raise BackNotReachable
+            else:
+                log.info(response.status_code)
+                log.info(response.text)
             return
 
     log.info(f"error extension for {path}, not supported")   
