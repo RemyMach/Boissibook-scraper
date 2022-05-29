@@ -1,4 +1,4 @@
 extension_to_app_type = {
-    ".pdf": "application/json",
+    ".pdf": "application/pdf",
     ".epub": "application/epub",
 }

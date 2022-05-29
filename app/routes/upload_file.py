@@ -20,7 +20,7 @@ def uploadFile(path, bookId):
     url = f"{base_path}/book-files"
 
     for key in extension_to_app_type.keys():
-        if(path.endswith(key)):
+        if(path.strip().endswith(key)):
             payload={'bookId': bookId, 'userId': None}
             files=[('file',(path, open(f"{download_path}/{path}" ,'rb'), extension_to_app_type[key]))]
             headers = {}
