@@ -1,0 +1,2 @@
+class BackNotReachable(Exception):
+    pass

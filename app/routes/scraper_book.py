@@ -98,5 +98,6 @@ class ScraperBook:
             time.sleep(2)
         
         log.info(f"no file match, normally I wait {SECONDS_LIMIT_DOWNLOAD} seconds of research")
+        log.info(f"you need to increase the download time or to look your replace carracters")
         driver.quit()
         raise ToMuchDownloadError(url_download)
