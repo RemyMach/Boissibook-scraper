@@ -1,6 +1,5 @@
 import requests
 import os
-from dotenv import load_dotenv
 from .extension_to_app_type import extension_to_app_type
 from error.to_much_download_error import ToMuchDownloadError
 from error.back_not_reachable import BackNotReachable

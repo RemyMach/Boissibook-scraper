@@ -8,8 +8,8 @@ from routes.errors import errors
 
 load_dotenv('../.env')
 app = Flask(__name__)
-app.config['CORS_HEADERS'] = 'Content-Type'
 cors = CORS(app, resources={r"": {"origins": "*"}})
+app.config['CORS_HEADERS'] = 'Content-Type'
 api = Api(app, errors=errors)
 
 
