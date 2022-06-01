@@ -10,7 +10,7 @@ RUN pip install -r requirements.txt
 
 COPY . /app
 
-ENV DOWNLOAD_PATH=/app/downloads \
+ENV DOWNLOAD_PATH=/app \
     BOISSIBOOK_API=http://boissibook:8080
 
 EXPOSE 3000
