@@ -1,0 +1,47 @@
+steps:
+  #step 1
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: 'bash'
+    args: [
+      '-c',
+      'docker pull $_GCP_REGISTRY_URL/$PROJECT_ID/$_GCP_REGISTRY_NAME/$_IMAGE_NAME:$_IMAGE_TAG || exit 0'
+    ]
+  #step 2
+  - name: gcr.io/cloud-builders/docker
+    args: [
+      'build',
+      '-t',
+      '$_GCP_REGISTRY_URL/$PROJECT_ID/$_GCP_REGISTRY_NAME/$_IMAGE_NAME:$_IMAGE_TAG',
+      '.'
+    ]
+    #step 3
+  - name: gcr.io/cloud-builders/docker
+    args: [
+      'push',
+      '$_GCP_REGISTRY_URL/$PROJECT_ID/$_GCP_REGISTRY_NAME/$_IMAGE_NAME:$_IMAGE_TAG',
+    ]
+  #step 4
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: bash
+    args:
+      - '-c'
+      - |
+        sed -i 's/%DOWNLOAD_PATH%/'${_DOWNLOAD_PATH}'/g' k8s/*.yaml
+        sed -i 's/%BOISSIBOOK_API%/'${_BOISSIBOOK_API}'/g' k8s/*.yaml
+  #step 5
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args: [ 'apply', '-f', 'k8s/' ]
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=$_CLUSTER_ZONE'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER_NAME'
+  #step 6
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args: [ 'rollout', 'restart', 'deployment/boissibook-scrapper' ]
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=$_CLUSTER_ZONE'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER_NAME'
+images: [
+  '$_GCP_REGISTRY_URL/$PROJECT_ID/$_GCP_REGISTRY_NAME/$_IMAGE_NAME:$_IMAGE_TAG'
+]
+options:
+  logging: CLOUD_LOGGING_ONLY
