@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: boissibook-scrapper
+  name: boissibook-scrapper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: boissibook-scrapper
+  template:
+    metadata:
+      labels:
+        run: boissibook-scrapper
+    spec:
+      containers:
+        - image: europe-west9-docker.pkg.dev/boissibook/boissi-registry/boissibook-scrapper:latest
+          imagePullPolicy: Always
+          name: boissibook-scrapper
+          env:
+            - name: DOWNLOAD_PATH
+              value: "%DOWNLOAD_PATH%"
+            - name: BOISSIBOOK_API
+              value: "%BOISSIBOOK_API%"
+          ports:
+            - containerPort: 3000
