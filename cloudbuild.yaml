@@ -26,8 +26,8 @@ steps:
     args:
       - '-c'
       - |
-        sed -i 's/%DOWNLOAD_PATH%/'${_DOWNLOAD_PATH}'/g' k8s/*.yaml
-        sed -i 's/%BOISSIBOOK_API%/'${_BOISSIBOOK_API}'/g' k8s/*.yaml
+        sed -i 's/%_DOWNLOAD_PATH%/'${_DOWNLOAD_PATH}'/g' k8s/*.yaml
+        sed -i 's/%_BOISSIBOOK_API%/'${_BOISSIBOOK_API}'/g' k8s/*.yaml
   #step 5
   - name: 'gcr.io/cloud-builders/kubectl'
     args: [ 'apply', '-f', 'k8s/' ]

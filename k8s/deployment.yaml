@@ -20,8 +20,8 @@ spec:
           name: boissibook-scrapper
           env:
             - name: DOWNLOAD_PATH
-              value: "%DOWNLOAD_PATH%"
+              value: "%_DOWNLOAD_PATH%"
             - name: BOISSIBOOK_API
-              value: "%BOISSIBOOK_API%"
+              value: "%_BOISSIBOOK_API%"
           ports:
             - containerPort: 3000

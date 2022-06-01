@@ -2,3 +2,5 @@ venv/
 static
 !static/.gitkeep
 .idea/
+k8s
+cloudbuild.yaml
